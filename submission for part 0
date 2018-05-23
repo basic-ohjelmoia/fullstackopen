@@ -1,0 +1,34 @@
+Tehtävä 4
+
+title Authentication Sequence
+kayttaja->selain:
+note left of selain
+kayttaja klikkaa linkkia 'muistiinpanot'
+end note
+selain-> palvelin: GET fullstack-exampleapp.herokuapp.com/notes
+note left of palvelin
+pyydetään palveimelta notes.html
+end note
+palvelin->selain: status 200, html-koodi
+selain-> palvelin: GET main.css
+note left of palvelin
+pyydetään palvelimelta html:n head-osan perusteella main.css
+end note
+palvelin->selain: status 200, css
+selain->palvelin: GET main.js
+note left of palvelin
+pyydetään palvelimelta html:n head-osan perusteella main.js
+end note
+palvelin->selain: status 200, js
+selain->palvelin: GET data.json
+note left of palvelin
+pyydetään palvelimelta data.json main.js:n perusteella
+end note
+palvelin->selain: status 200, json
+note left of selain
+main.js viljelee html:n sekaan li-erotettuja rivejä data.jsonin perusteella
+end note 
+note left of selain
+selain nayttaa kayttajalle valmiiksi koostetun notes.html -sivun
+end note 
+
