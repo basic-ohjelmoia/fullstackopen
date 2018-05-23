@@ -1,6 +1,5 @@
-Tehtävä 4
+Tehtävä 0.3
 
-title Authentication Sequence
 kayttaja->selain:
 note left of selain
 kayttaja klikkaa linkkia 'muistiinpanot'
@@ -32,3 +31,114 @@ note left of selain
 selain nayttaa kayttajalle valmiiksi koostetun notes.html -sivun
 end note 
 
+---
+
+Tehtävä 0.4
+
+kayttaja->selain:
+note left of selain
+kayttaja kirjoittaa sivun syotekenttaan uuden rivin ja klikkaa 'talleta'
+end note
+selain-> palvelin: POST fullstack-exampleapp.herokuapp.com/new_note
+note left of palvelin
+ladataan palvelimelle uusi muistiinpano
+end note
+note left of palvelin
+palvelin tallentaa uuden muistiinpanon data.jsonin jatkoksi
+end note
+palvelin->selain: status 302, found
+note left of selain
+selain reagoi palvelimelta saatuun 302 koodiin lataamalla muuttuneen (uusi tietue jsonissa) sivun uudelleen
+end note 
+selain-> palvelin: GET fullstack-exampleapp.herokuapp.com/notes
+note left of palvelin
+pyydetään palveimelta notes.html
+end note
+palvelin->selain: status 200, html-koodi
+selain-> palvelin: GET main.css
+note left of palvelin
+pyydetään palvelimelta html:n head-osan perusteella main.css
+end note
+palvelin->selain: status 200, css
+selain->palvelin: GET main.js
+note left of palvelin
+pyydetään palvelimelta html:n head-osan perusteella main.js
+end note
+palvelin->selain: status 200, js
+selain->palvelin: GET data.json
+note left of palvelin
+pyydetään palvelimelta data.json main.js:n perusteella
+end note
+palvelin->selain: status 200, json
+note left of selain
+main.js viljelee html:n sekaan li-erotettuja rivejä data.jsonin perusteella
+end note 
+note left of selain
+selain nayttaa kayttajalle valmiiksi koostetun notes.html -sivun
+end note 
+
+---
+
+Tehtävä 0.5
+
+kayttaja->selain:
+note left of selain
+kayttaja siirtyy selaimellaan sovelluksen spa-versioon
+end note
+selain-> palvelin: GET fullstack-exampleapp.herokuapp.com/spa
+note left of palvelin
+pyydetään palveimelta spa.html
+end note
+palvelin->selain: status 200, html-koodi
+selain-> palvelin: GET main.css
+note left of palvelin
+pyydetään palvelimelta html:n head-osan perusteella mainn.css
+end note
+palvelin->selain: status 200, css
+selain->palvelin: GET spa.js
+note left of palvelin
+pyydetään palvelimelta html:n head-osan perusteella spa.js
+end note
+palvelin->selain: status 200, js
+selain->palvelin: GET data.json
+note left of palvelin
+pyydetään palvelimelta data.json spa.js:n perusteella
+end note
+palvelin->selain: status 200, json
+note left of selain
+spa.js viljelee html:n sekaan li-erotettuja rivejä data.jsonin perusteella
+end note 
+note left of selain
+selain nayttaa kayttajalle valmiiksi koostetun spa.html -sivun
+end note 
+
+---
+
+Tehtävä 0.6
+
+kayttaja->selain:
+note left of selain
+kayttaja kirjoittaa sivun syotekenttaan uuden rivin ja klikkaa 'talleta'
+end note
+selain-> palvelin: POST fullstack-exampleapp.herokuapp.com/new_note_spa
+note left of palvelin
+ladataan palvelimelle uusi muistiinpano
+palvelimelle täsmennetään, että kyseessä on json-muotoista dataa
+end note
+note left of palvelin
+palvelin tallentaa uuden muistiinpanon data.jsonin jatkoksi
+end note
+palvelin->selain: status 201, created
+note left of selain
+selain reagoi palvelimelta saatuun 201 koodiin spa.js:n tapahtumakuuntelijalla
+spa.js estää e.preventDefault() -menettelyllä selainta lataamasta sivua kokonaan uudelleen
+sen sijaan ladataan vain data.json uudelleen
+end note 
+selain->palvelin: GET data.json
+note left of palvelin
+pyydetään palvelimelta data.json spa.js:n perusteella
+end note
+palvelin->selain: status 200, json
+note left of selain
+spa.js piirtää muistiinpanot uudelleen
+end note 
